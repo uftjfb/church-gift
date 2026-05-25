@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spiritual Gifts Assessment</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* ================= BASE ================= */
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #c3e7ff, #e7f0fd);
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ================= CONTAINER ================= */
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  display: none;
+}
+
+/* ================= HEADER ================= */
+
+.heading-section {
+  text-align: center;
+}
+
+.heading-section h1 {
+  font-size: 2rem; 
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  margin-bottom: 5px;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.heading-section h3 {
+  font-size: 1.3rem;
+  color:#0d1b2a;
+  font-weight:600;
+  letter-spacing:1px;
+  border-bottom: 2px solid rgba(13,27,42,0.2);
+  display: inline-block;
+  padding-bottom:5px;
+  margin-top:0;
+}
+
+hr {
+  border: none;
+  height: 2px; 
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* ================= STATEMENTS ================= */
+
+.statement {
+  margin-bottom: 25px;
+}
+
+.statement p {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #0d1b2a;
+}
+
+/* ================= BUTTONS ================= */
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 12px 0;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
+  color: #0d1b2a;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.buttons button:hover {
+  background: rgba(255,255,255,0.5);
+  transform: translateY(-2px);
+}
+
+.buttons button.selected {
+  background: rgba(0, 123, 255, 0.6);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ================= SUBMIT ================= */
+
+.submit-btn {
+  width: 100%;
+  padding: 15px 0;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 15px;
+  background: rgba(0,123,255,0.6);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  font-weight: 600;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.submit-btn:hover {
+  background: rgba(0,123,255,0.8);
+  transform: translateY(-2px);
+}
+
+/* ================= MODALS ================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  max-width: 320px;
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+
+/* ================= RESULT MODAL (UPGRADED) ================= */
+
+#resultModal.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+
+#resultModal .modal-content {
+  max-width: 360px;
+  width: 100%;
+
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 24px;
+
+  padding: 35px 25px;
+  text-align: center;
+
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+
+  animation: popIn 0.25s ease-out;
+}
+
+/* Title */
+#resultModal h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1381f7;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* Title */
+#resultModal h3 {
+  color: #ffffff;
+ }
+
+#resultText {
+  margin: 15px 0 25px;
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  background: transparent;
+}
+
+#resultText div {
+  padding: 12px 14px;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.567);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 1rem;
+  color: #1b3149;
+
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#resultText div:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+#resultText div span:first-child {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #2196F3, #4facfe);
+  color: white;
+
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  box-shadow: 0 4px 10px rgba(33, 150, 243, 0.25);
+  margin-right: 10px;
+}
+
+/* Close button */
+#resultModal button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+
+  border: none;
+  background: linear-gradient(135deg, #2196F3, #4facfe);
+
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+#resultModal button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #1976D2, #2196F3);
+}
+
+/* Animation */
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ================= SCALE ================= */
+
+.scale-legend {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  margin-bottom: 20px;
+  text-align: center;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 10px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.scale-legend .scale-labels,
+.scale-legend .scale-numbers {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.scale-legend .scale-labels span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #0d1b2a;
+}
+
+.scale-legend .scale-numbers span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2196F3;
+  margin-top: 5px;
+}
+
+/* ================= PASSWORD ================= */
+
+#passwordGate input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.2);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+#passwordBtn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #2196F3;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#passwordBtn:hover {
+  background: #1976D2;
+  transform: translateY(-2px);
+}
+
+#passwordError {
+  color: red;
+  display: none;
+  margin-top: 10px;
+}
+
+.church-pill {
+  display: inline-block;
+  margin-top: 12px;
+  margin-bottom:8px;
+  padding: 8px 14px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0d1b2a;
+
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(13,27,42,0.12);
+
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.input-block {
+  margin-bottom: 20px;
+}
+
+/* label styling consistent with header tone */
+.input-label {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  color: rgba(13,27,42,0.75);
+}
+
+/* upgraded input (glass style matching header pill) */
+#nameInput {
+  width: 90%;
+  padding: 14px 14px;
+	margin-right: -20px;
+  
+  border-radius: 14px;
+  border: 1px solid rgba(13,27,42,0.12);
+
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(10px);
+
+  font-size: 1rem;
+  color: #0d1b2a;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+/* placeholder */
+#nameInput::placeholder {
+  color: rgba(13,27,42,0.45);
+}
+
+/* focus state */
+#nameInput:focus {
+  border-color: #4facfe;
+  box-shadow: 0 0 0 3px rgba(79,172,254,0.25);
+  transform: translateY(-1px);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width: 400px) {
+  .buttons button {
+    padding: 10px 0;
+    font-size: 0.95rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="passwordGate" class="modal" style="display:flex;">
+  <div class="modal-content">
+    <p>Enter Session Password</p>
+    <input type="password" id="passwordInput">
+    <button id="passwordBtn">Continue</button>
+    <div id="passwordError">Incorrect password</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+<div class="heading-section">
+
+  <div class="heading-badge">Spiritual Gifts Assessment</div>
+
+  <h1>Discover Your Gift Profile</h1>
+
+
+  <!-- dynamic church name -->
+  <div class="church-pill" id="churchName">Loading church...</div>
+  <h3>Answer honestly based on how you naturally respond</h3>
+
+</div>
+<label class="input-label">Score scale</label>
+<div class="scale-legend">
+  <div class="scale-labels">
+    <span>Almost Never</span><span>Seldom</span><span>Sometimes</span><span>Usually</span><span>Always</span>
+  </div>
+  <div class="scale-numbers">
+    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+  </div>
+</div>
+<br>
+<div class="input-block">
+  <label class="input-label">Your Name</label>
+  <input type="text" id="nameInput" placeholder="Enter your full name">
+</div>
+
+<hr>
+
+<form id="quizForm">
+<!-- QUESTIONS -->
+
+<!-- 1 Administration -->
+<div class="statement" data-category="administration">
+  <p>1. When presented a goal, I immediately think of steps that need to be taken in order to achieve the desired results.</p>
+  <div class="buttons">
+    <button type="button" data-value="1">1</button>
+    <button type="button" data-value="2">2</button>
+    <button type="button" data-value="3">3</button>
+    <button type="button" data-value="4">4</button>
+    <button type="button" data-value="5">5</button>
+  </div>
+</div>
+
+<!-- 2 Artistry -->
+<div class="statement" data-category="artistry">
+  <p>2. I express myself through artistic means.</p>
+  <div class="buttons">
+    <button type="button" data-value="1">1</button>
+    <button type="button" data-value="2">2</button>
+    <button type="button" data-value="3">3</button>
+    <button type="button" data-value="4">4</button>
+    <button type="button" data-value="5">5</button>
+  </div>
+</div>
+
+<!-- 3 Discernment -->
+<div class="statement" data-category="discernment">
+  <p>3. My faith requires me to seek out God's will and purpose in all circumstances that arise in my life.</p>
+  <div class="buttons">
+    <button type="button" data-value="1">1</button>
+    <button type="button" data-value="2">2</button>
+    <button type="button" data-value="3">3</button>
+    <button type="button" data-value="4">4</button>
+    <button type="button" data-value="5">5</button>
+  </div>
+</div>
+
+<!-- 4 Evangelism -->
+<div class="statement" data-category="evangelism">
+  <p>4. I am able to convey the Gospel message to non-believers in ways that they are able to easily understand.</p>
+  <div class="buttons">
+    <button type="button" data-value="1">1</button>
+    <button type="button" data-value="2">2</button>
+    <button type="button" data-value="3">3</button>
+    <button type="button" data-value="4">4</button>
+    <button type="button" data-value="5">5</button>
+  </div>
+</div>
+
+<!-- 5 Exhortation -->
+<div class="statement" data-category="exhortation">
+  <p>5. I am moved by those who through conflict or sorrow are wavering in faith.</p>
+  <div class="buttons">
+    <button type="button" data-value="1">1</button>
+    <button type="button" data-value="2">2</button>
+    <button type="button" data-value="3">3</button>
+    <button type="button" data-value="4">4</button>
+    <button type="button" data-value="5">5</button>
+  </div>
+</div>
+
+<!-- 6 Faith -->
+<div class="statement" data-category="faith">
+  <p>6. I am certain of the Spirit's presence in my life and the lives of others.</p>
+  <div class="buttons">
+    <button type="button" data-value="1">1</button>
+    <button type="button" data-value="2">2</button>
+    <button type="button" data-value="3">3</button>
+    <button type="button" data-value="4">4</button>
+    <button type="button" data-value="5">5</button>
+  </div>
+</div>
+
+<!-- 7 Giving -->
+<div class="statement" data-category="giving">
+  <p>7. I am blessed by God each day and gladly respond by giving liberally of my time and money.</p>
+  <div class="buttons">
+    <button type="button" data-value="1">1</button>
+    <button type="button" data-value="2">2</button>
+    <button type="button" data-value="3">3</button>
+    <button type="button" data-value="4">4</button>
+    <button type="button" data-value="5">5</button>
+  </div>
+</div>
+
+
+
+
+<button type="submit" class="submit-btn">Submit</button>
+
+</form>
+
+</div>
+
+<!-- RESULT -->
+<div id="resultModal" class="modal">
+  <div class="modal-content">
+    <h3>Your Top Gifts</h3>
+    <h4>Feel free to screenshot this for future reference.</h4>
+    <div id="resultText"></div>
+    <button onclick="location.reload()">Close Assessment</button>
+  </div>
+</div>
+
+<script>
+
+/* ===== YOUR EXISTING JS (UNCHANGED LOGIC) ===== */
+
+const CONFIG_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQT988ynj2lZlZeeSXXSvxOtbJACl7WW1i3Osdin6cbJjECBaw4jGOG7uPDcVROinQjemA5Xt_RqbLZ/pub?gid=0&single=true&output=csv";
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycby0nuqJcwHrn_iH0Xi0AEyIzniaNG3QgHol-a6uVHHuQr-3hjtYynfhEbgHoRgODppl/exec";
+
+const SECRET_KEY = "church2026";
+
+const TOTAL_QUESTIONS = 60;
+
+
+function norm(str) {
+
+  return str
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, c => c.toUpperCase());
+
+}
+
+
+/* BUTTON LOGIC */
+document.querySelectorAll('.buttons button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const group = btn.parentElement.querySelectorAll('button');
+    group.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    btn.parentElement.dataset.value = btn.dataset.value;
+  });
+});
+
+/* FETCH CONFIG */
+async function fetchConfig() {
+  const res = await fetch(CONFIG_CSV);
+  const text = await res.text();
+  const rows = text.split("\n").map(r => r.split(","));
+
+  return {
+    password: rows[0][1]?.trim(),
+    church: rows[1][1]?.trim()
+  };
+}
+
+/* PASSWORD */
+document.getElementById("passwordBtn").addEventListener("click", async () => {
+  const entered = document.getElementById("passwordInput").value.trim();
+  const config = await fetchConfig();
+
+  if (entered === config.password) {
+    document.getElementById("passwordGate").style.display = "none";
+    document.querySelector(".container").style.display = "block";
+    document.getElementById("churchName").textContent = config.church;
+    window.currentChurch = config.church;
+  } else {
+    document.getElementById("passwordError").style.display = "block";
+  }
+});
+
+
+
+document
+  .getElementById("quizForm")
+  .addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const name =
+      document.getElementById("nameInput")
+        .value
+        .trim();
+
+    if (!name) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    const statements =
+      document.querySelectorAll(".statement");
+
+    let scores = {};
+
+    let missing = false;
+
+    statements.forEach(statement => {
+
+      const group =
+        statement.querySelector(".buttons");
+
+      const value =
+        parseInt(group.dataset.value);
+
+      const category =
+        statement.dataset.category;
+
+      if (!value) {
+        missing = true;
+        return;
+      }
+
+      scores[category] =
+        (scores[category] || 0) + value;
+
+    });
+
+    if (missing) {
+      alert("Please answer all questions.");
+      return;
+    }
+
+
+    /* ================= TOP 4 ================= */
+
+    const top4 = Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+
+
+    /* ================= SHOW RESULTS ================= */
+
+    document.getElementById("resultText").innerHTML =
+      top4.map((gift, index) => `
+        <div>
+          <span>${index + 1}</span>
+          <span>
+            ${gift[0]
+              .replace(/_/g, " ")
+              .replace(/\b\w/g, c => c.toUpperCase())
+            } (${gift[1]})
+          </span>
+        </div>
+      `).join("");
+    document.getElementById("resultModal").style.display =
+      "flex";
+
+
+    /* ================= SAVE TO GOOGLE SHEETS ================= */
+        
+        const submissionId = crypto.randomUUID();
+
+        const formData = new URLSearchParams();
+
+        formData.append("key", SECRET_KEY);
+        formData.append("submissionId", submissionId);
+        formData.append("name", name);
+        formData.append("church", window.currentChurch);
+        formData.append("top1", top4[0][0]);
+        formData.append("top2", top4[1][0]);
+        formData.append("top3", top4[2][0]);
+        formData.append("top4", top4[3][0]);
+        formData.append("scores", JSON.stringify(scores));
+
+        try {
+
+          const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: formData
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+
+            console.log("Submission confirmed");
+
+          } else {
+
+            console.error(result.message);
+
+            alert("Submission failed.");
+
+          }
+
+        } catch(err) {
+
+          console.error(err);
+
+          alert("Network error.");
+        }
+    });
+</script>
+
+</body>
+</html>
