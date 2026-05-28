@@ -443,6 +443,40 @@ hr {
   transform: translateY(-1px);
 }
 
+
+/* upgraded input (glass style matching header pill) */
+#surnameInput {
+  width: 90%;
+  padding: 14px 14px;
+	margin-right: -20px;
+  
+  border-radius: 14px;
+  border: 1px solid rgba(13,27,42,0.12);
+
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(10px);
+
+  font-size: 1rem;
+  color: #0d1b2a;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+/* placeholder */
+#surnameInput::placeholder {
+  color: rgba(13,27,42,0.45);
+}
+
+/* focus state */
+#surnameInput:focus {
+  border-color: #4facfe;
+  box-shadow: 0 0 0 3px rgba(79,172,254,0.25);
+  transform: translateY(-1px);
+}
+
 /* ================= RESPONSIVE ================= */
 
 @media(max-width: 400px) {
@@ -492,10 +526,14 @@ hr {
 </div>
 <br>
 <div class="input-block">
-  <label class="input-label">Your Name</label>
-  <input type="text" id="nameInput" placeholder="Enter your full name">
+  <label class="input-label">First Name</label>
+  <input type="text" id="nameInput" placeholder="Enter your first name">
 </div>
 
+<div class="input-block">
+  <label class="input-label">Surname</label>
+  <input type="text" id="surnameInput" placeholder="Enter your surname">
+</div>
 <hr>
 
 <form id="quizForm">
@@ -668,6 +706,7 @@ hr {
     <button type="button" data-value="5">5</button>
   </div>
 </div>
+
 
 <!-- 15 Pastoring -->
 <div class="statement" data-category="pastoring">
@@ -1221,9 +1260,6 @@ hr {
   </div>
 </div>
 
-
-
-
 <button type="submit" class="submit-btn">Submit</button>
 
 </form>
@@ -1247,7 +1283,7 @@ hr {
 const CONFIG_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQT988ynj2lZlZeeSXXSvxOtbJACl7WW1i3Osdin6cbJjECBaw4jGOG7uPDcVROinQjemA5Xt_RqbLZ/pub?gid=0&single=true&output=csv";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycby0nuqJcwHrn_iH0Xi0AEyIzniaNG3QgHol-a6uVHHuQr-3hjtYynfhEbgHoRgODppl/exec";
+  "https://script.google.com/macros/s/AKfycbzcTJm9gn7qCFFF0tp231if46vI4KHVcFbshK5foyQz3GRL8aY9V2LYICUCMcTMA7kc/exec";
 
 const SECRET_KEY = "church2026";
 
@@ -1313,10 +1349,15 @@ document
         .value
         .trim();
 
-    if (!name) {
-      alert("Please enter your name.");
+    const surname =
+      document.getElementById("surnameInput")
+        .value
+        .trim();
+
+    if (!name || !surname) {
+      alert("Please enter your first name and surname.");
       return;
-    }
+    } 
 
     const statements =
       document.querySelectorAll(".statement");
@@ -1386,6 +1427,7 @@ document
         formData.append("key", SECRET_KEY);
         formData.append("submissionId", submissionId);
         formData.append("name", name);
+        formData.append("surname",surname)
         formData.append("church", window.currentChurch);
         formData.append("top1", top4[0][0]);
         formData.append("top2", top4[1][0]);
